@@ -1,0 +1,24 @@
+example file
+'@' zeroes adds a number and puts it
+'#' adds 48 times
+the numbers are their equivalent church numerals
+
+{#\{@75\{32\
+
+@{n\#7n2n}
+
+@{x\2{5x}}
+
+[-] # 5+.
+
+@{x\2{5x}}
+
+}
+{fn\f{f{fn}}}
+{fn\f{fn}}
+}
+{f\[-]f+.}
+{fn\2{3f}{fn}}
+{fn\{3f}f{fn}}
+}
+{-27+}
