@@ -3,22 +3,17 @@ example file
 '#' adds 48 times
 the numbers are their equivalent church numerals
 
-{#\{@75\{32\
+{ #7532@ \
 
-@{n\#7n2n}
-
-@{x\2{5x}}
-
-[-] # 5+.
-
-@{x\2{5x}}
-
+  @{n\#7n2n}
+  @{x\2{5x}}
+  [-]#5{+.}'
+  @{x\2{5x}}
+  
 }
-{fn\f{f{fn}}}
-{fn\f{fn}}
-}
-{f\[-]f+.}
+{27+-}
 {fn\2{3f}{fn}}
 {fn\{3f}f{fn}}
-}
-{-27+}
+{fn\f{f{fn}}}
+{fn\f{fn}}
+{f\[-]f+.}

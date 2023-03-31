@@ -1,18 +1,20 @@
 // converts stdin as bfxl to bf to stdout
 #include <iostream>
+#include <cstring>
 #include <string>
 #include "convert.h"
 
 using namespace std;
 
 int
-main()
+main(int argc, char* argv[])
 {
-    string bfx; char line[80];
-    while(cin.getline(line, 80)) bfx += line;
+    char cc[4];
+    if (argc>1 && strlen(argv[1])>4) strncpy(cc, argv[1], 4);
+    else strncpy(cc, "#{\\}", 4);
     
-    char controlChars[4] = {'#', '{', '\\', '}'};
-    string bf = convert(bfx, controlChars);
-
-    cout << bf << endl;
+    string in ( (istreambuf_iterator<char>(cin)),
+                (istreambuf_iterator<char>()));
+                
+    cout << convert(in, cc) << endl;
 }

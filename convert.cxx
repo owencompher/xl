@@ -47,9 +47,6 @@ isLambda (string str, char cc[4])
 
     for (char c : str) // switch (c)
     {
-        /*case '{': case '}': return false; break;
-        case '\\': return true; break;
-        default: continue;*/
         if(c==cc[1]||c==cc[3]) return false;
         else if (c==cc[2]) return true;
         else continue;
@@ -78,7 +75,7 @@ convert (string str, char cc[4])
 {
     if (str.empty()) return str;
 
-    string result, term;
+    string result, term, next;
     while (!(term=getNext(str, cc)).empty()) // for the whole stack
     {
         // cout << "evaluating " << term << " off " << str << '\n';
@@ -89,7 +86,12 @@ convert (string str, char cc[4])
             if ((c=pop(term))!=cc[2]) // until we get to the body
             {
                 term = cc[1] + term; // replace needs a valid term
-                term = replace(c, getNext(str, cc), term, cc);
+                if (!isspace(c))
+                {
+                    do next = getNext(str, cc); 
+                    while (next.empty()?false:isspace(next.front()));
+                    term = replace(c, next, term, cc);
+                }
             }
             else term.pop_back(); // were at the body, drop } from end 
             str = term + str; // put body onto stack
