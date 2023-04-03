@@ -31,9 +31,9 @@ By default, the program checks for `{`, `}`, and `\` to define lambda
 abstractions. If you want to use different "control characters", you can specify
 them in a string as the first argument to the program. For example, 
 `./xlc " (.)"` uses `()` in place of `{}` and `.` in place of `\`. The first 
-character in the string (a space in the example) is reserved for a future 
-implementation of comments/include statements, and (for now) will be discarded.
-You might have to escape some characters, like `\` or `"`.
+character in the string (a space in the example) is reserved for future use and 
+(for now) will be discarded. You might have to escape some characters, like `\` 
+or `"`.
 
 The repo includes an example xl program [example.bfx](example.bfx), which was 
 used to test each release. Run `cat example.bfx | ./xlc` and the output should 
@@ -48,7 +48,8 @@ brainfuck interpreter should output
 There are 3 "control characters" in xl, by default `{`,`}`, and `\`, which are
 used to define lambda abstractions .
 
-For example, `{x\x}` is equivalent to λx.x (the identity function) in formal lambda calculus.
+For example, `{x\x}` is equivalent to λx.x (the identity function) in formal 
+lambda calculus.
 
 The global lambda expression is read left to right, repeatedly popping the next
 valid term of the stack and evaluating it. There are three cases for the term:
@@ -149,12 +150,37 @@ each case: with Church numerals, `23x` is the same as the Church numeral 9
 infinite recursion while evaluating. `2{3x}` does work as multiplication in both
 cases.
 
+### File Inclusion / Libraries
+It isn't too hard to use multiple files in one program, you just need to
+concatenate them before they are sent to xlc. `cat <file1> <file2>` does this
+automatically; as an example, you might write file `lib.bfx`:
+```
+{fn\{f{fn}}}
+{fn\{f{f{fn}}}}
+{fn\f{f{f{f{fn}}}}}
+{fn\f{f{f{f{f{f{fn}}}}}}}
+```
+which defines the Church numerals 2, 3, 5, and 7.  
+Then in something like `main.bfx`:
+```
+{2357\
+... main program, using 2, 3, 5, and 7
+}
+```
+Running `cat main.bfx lib.bfx | ./xlc` will evaluate as intended, with 2, 3, 5
+and 7 defined in the main program. If you wanted to enforce specific names (so
+that you can use library functions inside of other library functions, for
+example) you could add a closing `}` to the definitions and define a header file:
+```
+{2357\
+```
+then run `cat header.bfx main.bfx lib.bfx | ./xlc`.
+
 ## Extendable Languages
 The program doesn't remove characters that weren't used in lambda abstractions,
 including whitespace. I haven't tested it at all for any other 
-languages, but if there are 3 (possibly 4, I intend to add a comment and/or 
-include feature) characters available to be used exclusively by xl, the 
-language should be extendable. There are certain cases where whitespace is 
+languages, but if there are 3 characters available to be used exclusively by xl,
+the language should be extendable. There are certain cases where whitespace is 
 discarded (like in the bound characters of lambda abstractions, or when the next
 term to be used in a replacement is a whitespace character), so you will 
 probably have the best luck with languages that don't care about that. Notice in
