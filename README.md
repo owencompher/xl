@@ -16,7 +16,7 @@ abstractions (I had [brainfuck](https://esolangs.org/wiki/Brainfuck) in mind)
 There may still be bugs, so please try out the converter and try to break it. If
 you do discover unexpected behavior (the program may still crash or freeze; this
 is not nescesarily unexpected, I just haven't implemented syntax/error checking
-yet) please contact me at O2C#9358 on Discord or any other contact method you 
+yet) please contact me at owenaf on Discord or any other contact method you 
 know or can find.
 
 ## Using The Program
